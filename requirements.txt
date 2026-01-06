@@ -1,0 +1,5 @@
+Flask==3.0.0
+Flask-PyMongo==3.0.1
+pymongo==4.15.5
+paho-mqtt==1.6.1
+gunicorn==21.2.0
