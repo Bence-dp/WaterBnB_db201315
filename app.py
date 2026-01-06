@@ -119,10 +119,7 @@ def open_pool():
     if not user:
         print(f"Utilisateur inconnu: {idu}")
         send_pool_command(idswp, "RED")
-        
-        # Timer pour revenir a VERT apres 30 secondes
-        threading.Timer(30.0, lambda: send_pool_command(idswp, "GREEN")).start()
-        
+                
         log_access(idu, idswp, "denied", "unknown user")
         return jsonify({
             "status": "denied",
@@ -133,9 +130,7 @@ def open_pool():
     if idswp not in piscines:
         print(f"Piscine inconnue: {idswp}")
         send_pool_command(idswp, "RED")
-        
-        threading.Timer(30.0, lambda: send_pool_command(idswp, "GREEN")).start()
-        
+                
         log_access(idu, idswp, "denied", "unknown pool")
         return jsonify({
             "status": "denied",
@@ -145,18 +140,7 @@ def open_pool():
     # Verification disponibilite
     pool_data = piscines[idswp]
     
-    # Verifier si les donnees ne sont pas trop anciennes (> 5 minutes)
-    time_diff = (datetime.utcnow() - pool_data["last_update"]).total_seconds()
-    if time_diff > 300:  # 5 minutes
-        print(f"Donnees piscine obsoletes ({time_diff}s)")
-        send_pool_command(idswp, "RED")
-        threading.Timer(30.0, lambda: send_pool_command(idswp, "GREEN")).start()
-        log_access(idu, idswp, "denied", "stale data")
-        return jsonify({
-            "status": "denied",
-            "reason": "Statut piscine non a jour"
-        }), 503
-    
+
     if pool_data["occuped"]:
         print(f"Piscine occupee: {idswp}")
         send_pool_command(idswp, "RED")
