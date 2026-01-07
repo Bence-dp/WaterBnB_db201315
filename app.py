@@ -10,7 +10,7 @@ import time
 
 MONGO_URI = "mongodb+srv://root:toor@cluster0.jqdiovx.mongodb.net/WaterBnB?retryWrites=true&w=majority&tls=true"
 
-MQTT_BROKER = "mqtt.i3s.unice.fr"
+MQTT_BROKER = "192.168.177.211"
 MQTT_PORT = 1883
 MQTT_TOPIC_STATUS = "uca/iot/master"
 MQTT_TOPIC_CMD = "uca/iot/master"
@@ -119,7 +119,8 @@ def open_pool():
     if not user:
         print(f"Utilisateur inconnu: {idu}")
         send_pool_command(idswp, "RED")
-                
+        
+        
         log_access(idu, idswp, "denied", "unknown user")
         return jsonify({
             "status": "denied",
@@ -145,7 +146,6 @@ def open_pool():
         print(f"Piscine occupee: {idswp}")
         send_pool_command(idswp, "RED")
         
-        threading.Timer(30.0, lambda: send_pool_command(idswp, "GREEN")).start()
         
         log_access(idu, idswp, "denied", "pool occupied")
         return jsonify({
