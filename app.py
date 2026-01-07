@@ -11,6 +11,7 @@ import time
 MONGO_URI = "mongodb+srv://root:toor@cluster0.jqdiovx.mongodb.net/WaterBnB?retryWrites=true&w=majority&tls=true"
 
 MQTT_BROKER = "192.168.177.211"
+
 MQTT_PORT = 1883
 MQTT_TOPIC_STATUS = "uca/iot/master"
 MQTT_TOPIC_CMD = "uca/iot/master"
@@ -94,7 +95,7 @@ def index():
         "pools": list(piscines.keys())
     })
 
-@app.route("/open")
+@app.route("/open", methods=["GET"])
 def open_pool():
     """
     Route d'autorisation d'acces a une piscine
@@ -203,7 +204,7 @@ def log_access(user, pool, status, reason):
         print(f"Erreur log MongoDB: {e}")
 
 # ROUTES DEBUG (optionnel)
-@app.route("/pools")
+@app.route("/pools", methods=["GET"])
 def list_pools():
     """Liste toutes les piscines connues"""
     return jsonify({
@@ -216,7 +217,7 @@ def list_pools():
         }
     })
 
-@app.route("/users")
+@app.route("/users", methods=["GET"])
 def list_users():
     """Liste les utilisateurs (debug)"""
     users = list(mongo.db.users.find({}, {"_id": 0, "login": 1}))
