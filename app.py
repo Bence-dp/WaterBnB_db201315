@@ -10,7 +10,7 @@ import time
 
 MONGO_URI = "mongodb+srv://root:toor@cluster0.jqdiovx.mongodb.net/WaterBnB?retryWrites=true&w=majority&tls=true"
 
-MQTT_BROKER = "192.168.177.211"
+MQTT_BROKER = "broker.hivemq.com"
 
 MQTT_PORT = 1883
 MQTT_TOPIC_STATUS = "uca/iot/master"
